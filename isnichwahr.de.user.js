@@ -1,40 +1,51 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      0.2
+// @version      0.3
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        http://www.isnichwahr.de/
-// @grant        none
+// @grant        GM_openInTab
+// @grant        GM_info
 // @updateURL    https://github.com/jandob/userscripts/raw/master/isnichwahr.de.user.js
 // ==/UserScript==
+var isTampermonkey = GM_info.scriptHandler === "Tampermonkey";
 
-//localStorage.setItem("lastname", "Smith");
-//localStorage.removeItem("visitedLinks");
 var visitedLinks = JSON.parse(localStorage.getItem("visitedLinks"));
 if (visitedLinks === null || visitedLinks.length > 500) {
     visitedLinks = {};
 }
-//console.log(visitedLinks);
 var newLinks = [];
+
 function getType(element) {
     return $(element).parent().prev().children('a').text();
 }
+function openLink(element, open_in_background) {
+    var url = $(element).attr('href');
+    console.log('click', element);
+    $(element).css( "color", "" );
+    var index = newLinks.indexOf(element);
+    if (index > -1) {
+        newLinks.splice(index, 1);
+    }
+    visitedLinks[url] = getType(element);
+    localStorage.setItem("visitedLinks", JSON.stringify(visitedLinks));
+    if (isTampermonkey) {
+        GM_openInTab(url, {'active': !open_in_background});
+    } else {
+        GM_openInTab(url, open_in_background);
+    }
+}
+
 $('[id="liste"] tbody tr td:nth-child(3) a').each( function(i, element) {
-    var link = $(this).attr('href');
-    if (!(link in visitedLinks)) {
+    var url = $(this).attr('href');
+    if (!(url in visitedLinks)) {
         $(this).css( "color", "red" );
         newLinks.push(this);
     }
-    $(this).click( function () {
-        console.log('click', this);
-        $(this).css( "color", "" );
-        var index = newLinks.indexOf(this);
-        if (index > -1) {
-            newLinks.splice(index, 1);
-        }
-        visitedLinks[link] = getType(this);
-        localStorage.setItem("visitedLinks", JSON.stringify(visitedLinks));
+    $(this).click( function (event) {
+        event.preventDefault();
+        openLink(this, false);
     });
 });
 $('<button class="hans" type="button">Cleanup!</button>')
@@ -45,9 +56,9 @@ $('<button class="hans" type="button">Cleanup!</button>')
 $('<button class="hans" type="button">Mark all as seen!</button>')
 .insertAfter('#middlecategories').click( function() {
     $('[id="liste"] tbody tr td:nth-child(3) a').each( function(i, element) {
-        var link = $(this).attr('href');
+        var url = $(this).attr('href');
         $(this).css( "color", "" );
-        visitedLinks[link] = getType(this);
+        visitedLinks[url] = getType(this);
         localStorage.setItem("visitedLinks", JSON.stringify(visitedLinks));
     });
     newLinks = [];
@@ -60,7 +71,7 @@ $('<button class="hans" type="button">Open all Pics!</button>')
         var link = newLinks[i];
         if (opened < 5 && getType(link) === "pics") {
             opened++;
-            link.click();
+            openLink(link, true);
         }
     }
 });
@@ -72,7 +83,7 @@ $('<button class="hans" type="button">Open all Videos!</button>')
         var link = newLinks[i];
         if (opened < 5 && (getType(link) === "video" || getType(link) === "klassiker")) {
             opened++;
-            link.click();
+            openLink(link, true);
         }
     }
 });
@@ -83,7 +94,7 @@ $('<button class="hans" type="button">Open all new!</button>')
     while (i--) {
         if (opened < 5) {
             opened++;
-            newLinks[i].click();
+            openLink(link, true);
         }
     }
 });
