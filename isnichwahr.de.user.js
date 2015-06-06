@@ -92,6 +92,7 @@ $('<button class="hans" type="button">Open all new!</button>')
     var i = newLinks.length;
     var opened = 0;
     while (i--) {
+        var link = newLinks[i];
         if (opened < 5) {
             opened++;
             openLink(link, true);
