@@ -6,7 +6,7 @@
 // @author       jandob
 // @match        http://www.isnichwahr.de/
 // @grant        none
-// @updateURL
+// @updateURL    https://github.com/jandob/userscripts/raw/master/isnichwahr.de.user.js
 // ==/UserScript==
 
 //localStorage.setItem("lastname", "Smith");
