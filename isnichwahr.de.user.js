@@ -1,7 +1,8 @@
+
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      0.5
+// @version      0.6
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        http://www.isnichwahr.de/list
@@ -39,7 +40,6 @@ function openLink(element, open_in_background) {
 }
 
 $('.view-link-liste tbody tr td:nth-child(3) a').each( function(i, element) {
-    console.log($(this));
     var url = 'http://www.isnichwahr.de' + $(this).attr('href');
     if (!(url in visitedLinks)) {
         $(this).css( "color", "red" );
@@ -50,15 +50,16 @@ $('.view-link-liste tbody tr td:nth-child(3) a').each( function(i, element) {
         openLink(this, false);
     });
 });
+$('.view-link-liste .text-center:first').remove();
+controls = $('<ul class="pagination"></ul>');
+$('<div class="text-center"><div/>').prependTo('.view-link-liste').append(controls);
 
-controls = $('<div/>').insertBefore('.view-link-liste');
-
-$('<button class="hans" type="button">Cleanup!</button>')
+$('<li><a class="hans">Cleanup!</a></li>')
 .appendTo(controls).click( function() {
     localStorage.removeItem("visitedLinks");
     location.reload();
 });
-$('<button class="hans" type="button">Mark all as seen!</button>')
+$('<li><a class="hans">Mark all as seen!</a></li>')
 .appendTo(controls).click( function() {
     $('[id="liste"] tbody tr td:nth-child(3) a').each( function(i, element) {
         var url = $(this).attr('href');
@@ -68,7 +69,7 @@ $('<button class="hans" type="button">Mark all as seen!</button>')
     });
     newLinks = [];
 });
-$('<button class="hans" type="button">Open all Pics!</button>')
+$('<li><a class="hans">Open all Pics!</a></li>')
 .appendTo(controls).click( function() {
     var i = newLinks.length;
     var opened = 0;
@@ -80,7 +81,7 @@ $('<button class="hans" type="button">Open all Pics!</button>')
         }
     }
 });
-$('<button class="hans" type="button">Open all Videos!</button>')
+$('<li><a class="hans">Open all Videos!</a></li>')
 .appendTo(controls).click( function() {
     var i = newLinks.length;
     var opened = 0;
@@ -92,7 +93,7 @@ $('<button class="hans" type="button">Open all Videos!</button>')
         }
     }
 });
-$('<button class="hans" type="button">Open all new!</button>')
+$('<li><a class="hans">Open all new!</a></li>')
 .appendTo(controls).click( function() {
     var i = newLinks.length;
     var opened = 0;
@@ -104,4 +105,4 @@ $('<button class="hans" type="button">Open all new!</button>')
         }
     }
 });
-$('button.hans').css({"margin": "10px", "padding": "5px"});
+$('a.hans').css({"cursor": "pointer"});
