@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      0.4
+// @version      0.5
 // @description  extends isnichwahr functionality
 // @author       jandob
-// @match        http://www.isnichwahr.de/
+// @match        http://www.isnichwahr.de/list
 // @grant        GM_openInTab
 // @grant        GM_info
 // @updateURL    https://github.com/jandob/userscripts/raw/master/isnichwahr.de.user.js
 // ==/UserScript==
 var isTampermonkey = GM_info.scriptHandler === "Tampermonkey";
+var $ = jQuery;
 
 var visitedLinks = JSON.parse(localStorage.getItem("visitedLinks"));
 if (visitedLinks === null || visitedLinks.length > 500) {
@@ -21,7 +22,7 @@ function getType(element) {
     return $(element).parent().prev().children('a').text();
 }
 function openLink(element, open_in_background) {
-    var url = $(element).attr('href');
+    var url = 'http:/www.isnichwahr.de' + $(element).attr('href');
     console.log('click', element);
     $(element).css( "color", "" );
     var index = newLinks.indexOf(element);
@@ -37,8 +38,9 @@ function openLink(element, open_in_background) {
     }
 }
 
-$('[id="liste"] tbody tr td:nth-child(3) a').each( function(i, element) {
-    var url = $(this).attr('href');
+$('.view-link-liste tbody tr td:nth-child(3) a').each( function(i, element) {
+    console.log($(this));
+    var url = 'http://www.isnichwahr.de' + $(this).attr('href');
     if (!(url in visitedLinks)) {
         $(this).css( "color", "red" );
         newLinks.push(this);
@@ -48,13 +50,16 @@ $('[id="liste"] tbody tr td:nth-child(3) a').each( function(i, element) {
         openLink(this, false);
     });
 });
+
+controls = $('<div/>').insertBefore('.view-link-liste');
+
 $('<button class="hans" type="button">Cleanup!</button>')
-.insertAfter('#middlecategories').click( function() {
+.appendTo(controls).click( function() {
     localStorage.removeItem("visitedLinks");
     location.reload();
 });
 $('<button class="hans" type="button">Mark all as seen!</button>')
-.insertAfter('#middlecategories').click( function() {
+.appendTo(controls).click( function() {
     $('[id="liste"] tbody tr td:nth-child(3) a').each( function(i, element) {
         var url = $(this).attr('href');
         $(this).css( "color", "" );
@@ -64,7 +69,7 @@ $('<button class="hans" type="button">Mark all as seen!</button>')
     newLinks = [];
 });
 $('<button class="hans" type="button">Open all Pics!</button>')
-.insertAfter('#middlecategories').click( function() {
+.appendTo(controls).click( function() {
     var i = newLinks.length;
     var opened = 0;
     while (i--) {
@@ -76,7 +81,7 @@ $('<button class="hans" type="button">Open all Pics!</button>')
     }
 });
 $('<button class="hans" type="button">Open all Videos!</button>')
-.insertAfter('#middlecategories').click( function() {
+.appendTo(controls).click( function() {
     var i = newLinks.length;
     var opened = 0;
     while (i--) {
@@ -88,7 +93,7 @@ $('<button class="hans" type="button">Open all Videos!</button>')
     }
 });
 $('<button class="hans" type="button">Open all new!</button>')
-.insertAfter('#middlecategories').click( function() {
+.appendTo(controls).click( function() {
     var i = newLinks.length;
     var opened = 0;
     while (i--) {
