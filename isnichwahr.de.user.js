@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      0.7
+// @version      0.8
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        http://www.isnichwahr.de/list
@@ -13,7 +13,7 @@ var isTampermonkey = GM_info.scriptHandler === "Tampermonkey";
 var $ = jQuery;
 
 var visitedLinks = JSON.parse(localStorage.getItem("visitedLinks"));
-if (visitedLinks === null || visitedLinks.length > 1000) {
+if (visitedLinks === undefined || visitedLinks === null || visitedLinks.length > 1000) {
     visitedLinks = {};
 }
 var newLinks = [];
@@ -22,7 +22,7 @@ function getType(element) {
     return $(element).parent().prev().find('.term-category a').text()
 }
 function openLink(element, open_in_background) {
-    var url = 'http:/www.isnichwahr.de' + $(element).attr('href');
+    var url = 'http://www.isnichwahr.de' + $(element).attr('href');
     console.log('click', element);
     $(element).css( "color", "" );
     var index = newLinks.indexOf(element);
