@@ -1,7 +1,8 @@
+
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      0.7
+// @version      0.8
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        http://www.isnichwahr.de/*
@@ -11,10 +12,15 @@
 // ==/UserScript==
 var isTampermonkey = GM_info.scriptHandler === "Tampermonkey";
 var $ = jQuery;
-$('.service-links').remove();
-if (window.location.href.indexOf("isnichwahr.de/r") > -1){
-    $('div.panel-panel.right').remove()
 
+$('.service-links').remove();
+
+if (window.location.href.indexOf("isnichwahr.de/r") > -1){
+    $('.navbar').remove();
+    $('body').attr('style', 'padding-top: 0px !important');
+    $('div.panel-panel.top').remove()
+
+    $('div.panel-panel.right').remove()
     $('div.panel-panel.left').removeClass (function (index, css) {
         console.log(index);
         console.log(css);
