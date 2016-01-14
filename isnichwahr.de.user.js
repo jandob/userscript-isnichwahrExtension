@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      0.9
+// @version      1.0
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        http://www.isnichwahr.de/*
@@ -85,8 +85,7 @@ if (window.location.href.indexOf("isnichwahr.de/list") > -1) {
 
     // initialize newLinks
     $currentLinks.each( function(i, element) {
-        var url = 'http://www.isnichwahr.de' + $(this).attr('href');
-        if (!(url in visitedLinks)) {
+        if (!($(this).attr('href') in visitedLinks)) {
             $(this).css( "color", "red" );
             newLinks.push(this);
         }
