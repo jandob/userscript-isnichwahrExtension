@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         isnichwahrExtensionES7
+// @name         isnichwahrExtension
 // @namespace    http://jandob.com
 // @version      2.0
 // @description  extends isnichwahr functionality
