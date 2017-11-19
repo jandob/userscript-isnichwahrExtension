@@ -12,7 +12,7 @@
 // @require      https://code.jquery.com/jquery-3.2.1.slim.min.js
 // @require      https://unpkg.com/vue
 // @run-at       document-end
-// @updateURL    https://github.com/jandob/userscripts/raw/master/isnichwahr.de.user.js
+// @downloadURL  https://github.com/jandob/userscripts/raw/master/isnichwahr.de.user.js
 // ==/UserScript==
 
 /* jshint ignore:start */
