@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      2.0
+// @version      2.1
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        http://www.isnichwahr.de/*
@@ -48,8 +48,9 @@ class Storage {
         // we have a storage uri now
         localStorage.setItem('synchronized_storage_uri', this.storageUri)
 
-        this.data = await fetch(this.storageUri)
+        let data = await fetch(this.storageUri)
           .then(response => response.json())
+        localStorage.setItem('synchronized_storage', JSON.stringify(data))
         this.synced = true
         console.log("finished init",this.storageUri)
     }
