@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      2.1
+// @version      2.2
 // @description  extends isnichwahr functionality
 // @author       jandob
-// @match        http://www.isnichwahr.de/*
+// @match        https://www.isnichwahr.de/*
 // @grant        GM_openInTab
 // @grant        GM_info
 // @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
@@ -66,7 +66,7 @@ class Storage {
     }
     // pushes to storage, makes sure the latest push is executed
     _push (val) {
-	  if (this.currentRequest) {
+      if (this.currentRequest) {
         this.pendingRequest = val
         return
       }
