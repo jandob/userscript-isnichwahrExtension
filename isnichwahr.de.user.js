@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      2.2
+// @version      2.3
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        https://www.isnichwahr.de/*
@@ -26,7 +26,7 @@ const isTampermonkey = GM_info.scriptHandler === 'Tampermonkey'
 const $ = jQuery
 
 class Storage {
-    async init(storageUri) {
+    async init(initialvalue, storageUri) {
         this.baseUrl = 'https://api.myjson.com/bins'
         if (storageUri) {
           this.storageUri = storageUri
@@ -37,7 +37,7 @@ class Storage {
            console.log('init new storage')
            this.storageUri = await fetch(this.baseUrl, {
              method: "POST",
-             body: JSON.stringify({}),
+             body: JSON.stringify(initialvalue),
              headers: new Headers({
                 'Content-Type':"application/json; charset=utf-8",
                 'Accept': 'application/json'
@@ -233,7 +233,7 @@ async function insertApp() {
         },
         uuid: function() {
             if (storage.storageUri != this.uuid) {
-                storage.init(this.uuid)
+                storage.init([], this.uuid)
             }
         }
       },
@@ -267,7 +267,7 @@ async function insertApp() {
       }
     })
 
-    await storage.init()
+    await storage.init([])
     let visitedLinks = new Set(storage.get())
     for (let link of appIns.linkList) {
         if (visitedLinks.has(link.href)) {
