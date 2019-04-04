@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      2.3
+// @version      2.4
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        https://www.isnichwahr.de/*
@@ -278,7 +278,7 @@ async function insertApp() {
     appIns.uuid = storage.storageUri
 }
 // matches link list
-if (window.location.href.indexOf('isnichwahr.de/list') > -1) {
+if (window.location.href.indexOf('isnichwahr.de') > -1) {
     insertApp()
 }
 
