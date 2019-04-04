@@ -278,7 +278,7 @@ async function insertApp() {
     appIns.uuid = storage.storageUri
 }
 // matches link list
-if (window.location.href.indexOf('isnichwahr.de') > -1) {
+if (document.location.pathname == '/') {
     insertApp()
 }
 
