@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         isnichwahrExtension
 // @namespace    http://jandob.com
-// @version      2.4
+// @version      2.5
 // @description  extends isnichwahr functionality
 // @author       jandob
 // @match        https://www.isnichwahr.de/*
