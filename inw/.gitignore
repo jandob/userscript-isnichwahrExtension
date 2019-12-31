@@ -1,0 +1,3 @@
+node_modules
+dist/*.meta.js
+dist/*.proxy.user.js
