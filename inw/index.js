@@ -16,9 +16,15 @@ import App from './App.vue'
 import infiniteScroll from 'vue-infinite-scroll'
 Vue.use(infiniteScroll)
 
+import vueScrollTo from 'vue-scrollto' 
+Vue.use(vueScrollTo)
+
+import VueWaypoint from 'vue-waypoint'
+Vue.use(VueWaypoint)
+
 function inIframe () {
     try {
-        return window.self !== window.top;
+        return window.self !== window.top
     } catch (e) {
         return true;
     }

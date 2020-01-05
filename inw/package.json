@@ -1,6 +1,6 @@
 {
   "name": "inwInfinity",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "INW Infinity scroll",
   "scripts": {
     "serve": "webpack-dev-server --mode=development",
@@ -27,6 +27,8 @@
   "dependencies": {
     "jquery": "^3.4.1",
     "vue": "^2.6.11",
-    "vue-infinite-scroll": "^2.0.2"
+    "vue-infinite-scroll": "^2.0.2",
+    "vue-scrollto": "^2.17.1",
+    "vue-waypoint": "^3.2.2"
   }
 }
